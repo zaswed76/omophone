@@ -4,15 +4,9 @@ import Levenshtein as lv
 import numpy as np
 
 
-def get_words(file, nword=0):
+def get_words(file):
     with open(file, "r", encoding="utf-8") as f:
-        word_lst = [x.strip() for x in f.readlines()]
-        if nword:
-            n = nword
-        else:
-            n = len(word_lst)
-        cut_lst = word_lst[:n]
-        return cut_lst
+        return [x.strip() for x in f.readlines()]
 
 
 def grouper(n, iterable, fillvalue=""):
@@ -47,7 +41,7 @@ def get_omo(_text, word_dict, count_words, ratio):
     :type word_dict: list < str словарь в виде списка слов
     :type _text: str слово для поиск
     """
-    omo_list_with_ratio = __get_omo("Intellect", word_dict, _text, ratio)
+    omo_list_with_ratio = __get_omo("jaro", word_dict, _text, ratio)
     res_sort = sorted_on_ratio(omo_list_with_ratio)
     omo_list_not_ratio = [x[0] for x in res_sort if x][:int(count_words)]
     res_pigment = [split2(x, _text[:3]) for x in omo_list_not_ratio]
